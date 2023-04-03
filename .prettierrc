@@ -1,0 +1,21 @@
+{
+    "printWidth": 120,
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "singleQuote": true,
+    "overrides": [
+        {
+            "files": "*.yaml",
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": "*.hbs",
+            "options": {
+                "parser": "glimmer",
+                "singleQuote": false
+            }
+        }
+    ]
+}

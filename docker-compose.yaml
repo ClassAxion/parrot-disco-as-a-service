@@ -1,0 +1,13 @@
+version: '3.8'
+volumes:
+  postgres:
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - '5555:5432'
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=parrotdisco
+    volumes:
+      - postgres:/var/lib/postgresql/data
