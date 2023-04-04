@@ -23,6 +23,7 @@ var DeployStatusVerbose = map[int]string{
 	2: "deploying in progress",
 	3: "deployed",
 	4: "deploy failed",
+	5: "stopping",
 }
 
 func (service *Service) GetDeployIPByHash(ctx context.Context, hash string) (*user.User, error) {

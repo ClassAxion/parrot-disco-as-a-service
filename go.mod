@@ -7,7 +7,9 @@ require github.com/gin-contrib/sessions v0.0.5
 require (
 	github.com/BurntSushi/locker v0.0.0-20171006230638-a6e239ea1c69 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
+	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.2 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.12.1 // indirect
@@ -18,6 +20,8 @@ require (
 	github.com/jackc/pgtype v1.11.0 // indirect
 	github.com/jackc/pgx/v4 v4.16.1 // indirect
 	github.com/jackc/puddle v1.2.1 // indirect
+	github.com/kr/fs v0.1.0 // indirect
+	github.com/pkg/sftp v1.13.5 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 )
 
@@ -36,6 +40,7 @@ require (
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/gorilla/sessions v1.2.1 // indirect
+	github.com/helloyi/go-sshclient v1.2.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/joho/godotenv v1.5.1
 	github.com/json-iterator/go v1.1.12 // indirect

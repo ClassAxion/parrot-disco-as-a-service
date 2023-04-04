@@ -9,7 +9,8 @@ CREATE TABLE public.user (
     homeLocation jsob,
     deployStatus integer NOT NULL DEFAULT 0,
     deployIP character varying,
+    deployPassword character varying,
     deployID character varying,
-    defaultRegion character varying,
+    deployRegion character varying,
     deployedAt timestamp without time zone
 );

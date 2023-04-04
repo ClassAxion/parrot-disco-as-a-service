@@ -366,7 +366,16 @@
                     flight in RTH page on the dashboard.
                 </div>
                 <div class="text-center">
+                    {{if .CanChange}}
                     <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Save settings</button>
+                    {{else}}
+                    <button type="button" class="btn bg-gradient-info w-100 mt-4 mb-0" disabled="">
+                        Cannot save settings
+                    </button>
+                    {{ end }}
+                </div>
+                <div class="form-text mb-2">
+                    Remember! You cannot change these settings during deployment. Please change them before.
                 </div>
             </form>
         </div>

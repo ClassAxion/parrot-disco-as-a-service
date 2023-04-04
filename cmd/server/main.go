@@ -68,7 +68,11 @@ func startWorkers(ctx context.Context, db *database.Database, kv *pgkv.Store, se
 		KeyValue: kv,
 	}
 
-	workers := []worker.Worker{}
+	workers := []worker.Worker{
+		worker.StartDeploy(),
+		worker.StopDeploy(),
+		worker.CleanInstances(),
+	}
 
 	var wg sync.WaitGroup
 	for i, w := range workers {

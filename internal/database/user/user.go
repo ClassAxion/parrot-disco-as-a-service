@@ -23,8 +23,10 @@ type User struct {
 	// 2 - deploying
 	// 3 - deployed (can stop)
 	// 4 - deploy failed (can deploy)
-	DeployIP      *string
-	DeployID      *int
-	DefaultRegion *string
-	DeployedAt    *time.Time
+	// 5 - stop request
+	DeployIP       *string
+	DeployPassword *string
+	DeployID       *string
+	DeployRegion   *string
+	DeployedAt     *time.Time
 }

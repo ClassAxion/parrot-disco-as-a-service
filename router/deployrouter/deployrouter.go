@@ -30,7 +30,6 @@ func submit(deployService *deployservice.Service, vultr *govultr.Client, userSer
 
 		if c.Request.Method == http.MethodPost {
 			region := c.PostForm("region")
-			rememberRegion := c.PostForm("rememberRegion") != ""
 
 			regionFound := false
 
@@ -41,20 +40,17 @@ func submit(deployService *deployservice.Service, vultr *govultr.Client, userSer
 				}
 			}
 
-			if settings.DeployStatus == 3 {
+			if settings.ZeroTierNetworkId == nil {
+				session.AddFlash("Update your settings first", "danger")
+				session.Save()
+			} else if !(settings.DeployStatus == 0 || settings.DeployStatus == 4) {
 				session.AddFlash("Already deployed, you can't do that", "danger")
 				session.Save()
 			} else if !regionFound {
 				session.AddFlash("Selected region is currently unavailable", "danger")
 				session.Save()
 			} else {
-				if rememberRegion {
-					if err := userService.UpdateDefaultRegion(c, userID, region); err != nil {
-						panic(err)
-					}
-				}
-
-				if err := userService.StartDeploying(c, userID); err != nil {
+				if err := userService.StartDeploying(c, userID, region); err != nil {
 					panic(err)
 				}
 
@@ -66,12 +62,12 @@ func submit(deployService *deployservice.Service, vultr *govultr.Client, userSer
 			return
 		}
 
-		var defaultRegion *govultr.Region
+		var lastRegion *govultr.Region
 
-		if settings.DefaultRegion != nil {
+		if settings.DeployRegion != nil {
 			for i := range regions {
-				if regions[i].ID == *settings.DefaultRegion {
-					defaultRegion = &regions[i]
+				if regions[i].ID == *settings.DeployRegion {
+					lastRegion = &regions[i]
 					break
 				}
 			}
@@ -90,10 +86,11 @@ func submit(deployService *deployservice.Service, vultr *govultr.Client, userSer
 				"Successes": successes,
 				"Dangers":   dangers,
 			},
-			"DefaultRegion": defaultRegion,
+			"LastRegion": lastRegion,
 			"Status": gin.H{
-				"CanDeploy": settings.DeployStatus == 0 || settings.DeployStatus == 4,
+				"CanDeploy": settings.ZeroTierNetworkId != nil && (settings.DeployStatus == 0 || settings.DeployStatus == 4),
 				"CanStop":   settings.DeployStatus == 3,
+				"Failed":    settings.DeployStatus == 4,
 				"Verbose":   deployservice.DeployStatusVerbose[settings.DeployStatus],
 			},
 		})
@@ -112,7 +109,7 @@ func stop(deployService *deployservice.Service, vultr *govultr.Client, userServi
 		}
 
 		if settings.DeployStatus != 3 {
-			session.AddFlash("You can't to that", "danger")
+			session.AddFlash("You can't stop instance right now", "danger")
 			session.Save()
 
 			c.Redirect(http.StatusFound, "/deploy/submit")
@@ -120,6 +117,13 @@ func stop(deployService *deployservice.Service, vultr *govultr.Client, userServi
 		}
 
 		if c.Request.Method == http.MethodPost {
+			if err := userService.Stop(c, userID); err != nil {
+				panic(err)
+			}
+
+			session.AddFlash("Your instance will be stopped in a moment", "submit")
+			session.Save()
+
 			c.Redirect(http.StatusFound, "/deploy/submit")
 			return
 		}

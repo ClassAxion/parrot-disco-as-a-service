@@ -18,12 +18,20 @@ func settings(userService *userservice.Service) func(*gin.Context) {
 
 		userID := session.Get("user").(int)
 
+		settings, err := userService.GetSettings(c, userID)
+		if err != nil {
+			panic(err)
+		}
+
 		if c.Request.Method == http.MethodPost {
 			hash := c.PostForm("hash")
 			zeroTierNetworkId := c.PostForm("zeroTierNetworkId")
 			zeroTierDiscoIP := c.PostForm("zeroTierDiscoIP")
 
-			if hash == "" || zeroTierNetworkId == "" || zeroTierDiscoIP == "" {
+			if !(settings.DeployStatus == 0 || settings.DeployStatus == 4) {
+				session.AddFlash("You cannot modify settings now", "danger")
+				session.Save()
+			} else if hash == "" || zeroTierNetworkId == "" || zeroTierDiscoIP == "" {
 				session.AddFlash("Please fill all fields correctly", "danger")
 				session.Save()
 			} else {
@@ -72,11 +80,6 @@ func settings(userService *userservice.Service) func(*gin.Context) {
 			return
 		}
 
-		user, err := userService.GetSettings(c, userID)
-		if err != nil {
-			panic(err)
-		}
-
 		dangers := session.Flashes("danger")
 		successes := session.Flashes("success")
 
@@ -84,11 +87,12 @@ func settings(userService *userservice.Service) func(*gin.Context) {
 
 		c.HTML(http.StatusOK, "user/settings", gin.H{
 			"Title": "Settings",
-			"User":  user,
+			"User":  settings,
 			"Alert": gin.H{
 				"Successes": successes,
 				"Dangers":   dangers,
 			},
+			"CanChange": settings.DeployStatus == 0 || settings.DeployStatus == 4,
 		})
 	}
 }

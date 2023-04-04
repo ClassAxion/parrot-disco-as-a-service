@@ -33,13 +33,19 @@ func New(
 
 		if host == "flight.parrotdisco.pl" {
 			user, _ := services.DeployService.GetDeployIPByHash(c, hash)
+
 			if user != nil {
-				if user.DeployStatus == 4 && user.DeployIP != nil {
+				if user.DeployStatus == 3 && user.DeployIP != nil {
 					c.Redirect(http.StatusFound, fmt.Sprintf("http://%s:8000/", *user.DeployIP))
+				} else if user.DeployStatus == 1 || user.DeployStatus == 2 {
+					c.AbortWithError(http.StatusNotFound, fmt.Errorf("deploying in progress"))
+				} else if user.DeployStatus == 4 {
+					c.AbortWithError(http.StatusNotFound, fmt.Errorf("deploying failed"))
 				} else {
-					c.AbortWithError(http.StatusNotFound, fmt.Errorf("deployment not ready"))
-					return
+					c.AbortWithError(http.StatusNotFound, fmt.Errorf("not deployed"))
 				}
+
+				return
 			}
 		}
 

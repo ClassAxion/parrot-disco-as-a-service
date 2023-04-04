@@ -259,12 +259,18 @@
                             {{ end }}
 
                             <form role="form" method="POST">
+                                {{if .Status.Failed}}
+                                <div class="form-text text-warning mb-2">
+                                    Your last deploy failed. That means probably that selected region is currently
+                                    unavailable. Please wait or try again on another region.
+                                </div>
+                                {{ end }}
                                 <label>Region</label>
                                 <div class="mb-3">
                                     <select class="form-select" aria-label="" name="region">
-                                        {{if .DefaultRegion}}
-                                        <option value="{{ .DefaultRegion.ID }}" selected="">
-                                            {{ .DefaultRegion.Country }} ({{ .DefaultRegion.City }}) - your last choice
+                                        {{if .LastRegion}}
+                                        <option value="{{ .LastRegion.ID }}" selected="">
+                                            {{ .LastRegion.Country }} ({{ .LastRegion.City }}) - your last choice
                                         </option>
                                         {{
                                             end
@@ -278,15 +284,6 @@
                                         }}
                                     </select>
                                 </div>
-                                <div class="form-check form-switch">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        id="rememberRegion"
-                                        name="rememberRegion"
-                                    />
-                                    <label class="form-check-label" for="rememberRegion">Remember my choice</label>
-                                </div>
                                 <div class="form-text mb-2">
                                     Your session will be deleted automatically after 3 hours from deploy
                                 </div>
@@ -298,6 +295,9 @@
                                         Cannot deploy now
                                     </button>
                                     {{ end }}
+                                </div>
+                                <div class="form-text mb-2">
+                                    Don't forget to allow new device on ZeroTier network after deployment!
                                 </div>
                             </form>
                         </div>
@@ -341,7 +341,7 @@
                                         title="Open link"
                                     ></a>
                                     {{else}}
-                                    <h6 class="mb-0">Please fill your settings</h6>
+                                    <h6 class="mb-0">Please fill your settings first</h6>
                                     {{ end }}
                                 </div>
                             </div>
