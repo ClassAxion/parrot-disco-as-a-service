@@ -27,7 +27,7 @@
     <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link active" href="/">
+                <a class="nav-link" href="/">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
                     >
@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/deploy/submit">
+                <a class="nav-link active" href="/deploy/submit">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center"
                     >
@@ -226,9 +226,9 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                     <li class="breadcrumb-item text-sm">Parrot Disco LTE Dashboard as a service</li>
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Homepage</li>
+                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Settings</li>
                 </ol>
-                <h6 class="font-weight-bolder mb-0">Homepage</h6>
+                <h6 class="font-weight-bolder mb-0">Settings</h6>
             </nav>
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
@@ -240,302 +240,16 @@
             </div>
         </div>
     </nav>
-    <!-- End Navbar -->
     <div class="container-fluid py-4">
         <div class="row">
-            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Minutes of flight</p>
-                                    <h5 class="font-weight-bolder mb-0">
-                                        -
-                                        <span class="text-success text-sm font-weight-bolder"></span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Flights</p>
-                                    <h5 class="font-weight-bolder mb-0">
-                                        -
-                                        <span class="text-success text-sm font-weight-bolder"></span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Latest session</p>
-                                    <h5 class="font-weight-bolder mb-0">
-                                        -
-                                        <span class="text-danger text-sm font-weight-bolder"></span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Account</p>
-                                    <h5 class="font-weight-bolder mb-0">
-                                        <span class="text-success">ACTIVE</span>
-                                        <span class="text-success text-sm font-weight-bolder"></span>
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                    <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-lg-7 mb-lg-0 mb-4">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="d-flex flex-column h-100">
-                                    <p class="mb-1 pt-2 text-bold">Easy to use</p>
-                                    <h5 class="font-weight-bolder">User friendly</h5>
-                                    <p class="mb-5">
-                                        You can deploy Parrot Disco LTE Dashboard in a moment without linux experience.
-                                        Just fill the account settings like ZeroTier ID, click deploy and fly!
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
-                                <div class="bg-white border-radius-lg h-100">
-                                    <img
-                                        src="/public/img/shapes/waves-white.svg"
-                                        class="position-absolute h-100 w-50 top-0 d-lg-block d-none"
-                                        alt="waves"
-                                    />
-                                    <div
-                                        class="position-relative d-flex align-items-center justify-content-center h-100"
-                                    >
-                                        <img
-                                            class="w-100 position-relative z-index-2 pt-4"
-                                            src="/public/img/parrot.png"
-                                            alt="rocket"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5">
-                <div class="card h-100 p-3">
-                    <div
-                        class="overflow-hidden position-relative border-radius-lg bg-cover h-100"
-                        style="background-image: url('/public/img/ivancik.jpg')"
-                    >
-                        <span class="mask bg-gradient-dark"></span>
-                        <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
-                            <h5 class="text-white font-weight-bolder mb-4 pt-2">Need help?</h5>
-                            <p class="text-white">Join the largest Parrot Disco Community</p>
-                            <a
-                                class="text-white text-sm font-weight-bold mb-0 icon-move-right mt-auto"
-                                href="https://uavpal.slack.com/"
-                            >
-                                Join UAVPal
-                                <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12 mb-lg-0 mb-4">
-            <div class="card mt-4">
-                <div class="card-header pb-0 p-3">
-                    <div class="row">
-                        <div class="col-6 d-flex align-items-center">
-                            <h6 class="mb-0">
-                                Status <span class="text-success">{{ .Status.Verbose }}</span>
-                            </h6>
-                        </div>
-                        <div class="col-6 text-end">
-                            {{if .Status.CanStop }}
-                            <a class="btn bg-gradient-danger mb-0" href="/deploy/stop"
-                                ><i class="fas fa-times"></i>&nbsp;&nbsp;Stop</a
-                            >
-                            {{ end }}
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div
-                                class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row"
-                            >
-                                {{if .Settings.Hash}}
-                                <a href="https://flight.parrotdisco.pl/{{ .Settings.Hash }}" target="_blank"
-                                    ><h6 class="mb-0">https://flight.parrotdisco.pl/{{ .Settings.Hash }}</h6></a
-                                >
+            <div class="col-xl-6 col-lg-6 col-md-6 d-flex flex-column mx-auto">
+                <h6 class="mb-0">Status <span class="text-success">deployed</span></h6>
 
-                                <a
-                                    href="https://flight.parrotdisco.pl/{{ .Settings.Hash }}"
-                                    class="fas fa-link ms-auto text-dark cursor-pointer"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="Open link"
-                                ></a>
-                                {{else}}
-                                <h6 class="mb-0">Please fill your settings</h6>
-                                {{ end }}
-                            </div>
-                        </div>
+                <form role="form" method="POST">
+                    <div class="text-center">
+                        <button type="submit" class="btn bg-gradient-danger w-100 mt-4 mb-0">Stop</button>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-12 col-xl-4 mt-4">
-                <div class="card h-100">
-                    <div class="card-header pb-0 p-3">
-                        <div class="row">
-                            <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-0">How can I control the drone using this software?</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body p-3">
-                        <p class="text-sm">
-                            Currently you can use mouse to move the joystick located on the right section of the
-                            dashboard. You can't use keyboard (WASD) to control the drone.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-xl-4 mt-4">
-                <div class="card h-100">
-                    <div class="card-header pb-0 p-3">
-                        <div class="row">
-                            <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-0">Can I use this software and SkyController 2 at the same time?</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body p-3">
-                        <p class="text-sm">No! Parrot Disco can handle only one controller at the same time.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-xl-4 mt-4">
-                <div class="card h-100">
-                    <div class="card-header pb-0 p-3">
-                        <div class="row">
-                            <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-0">What will happen when my drone will lost LTE signal?</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body p-3">
-                        <p class="text-sm">
-                            Parrot Disco will start return-to-home. Drone will come back to your home point or if you
-                            don't set it then it will come back to take off point.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-xl-4 mt-4">
-                <div class="card h-100">
-                    <div class="card-header pb-0 p-3">
-                        <div class="row">
-                            <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-0">What I need to use this software?</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body p-3">
-                        <p class="text-sm">
-                            You will need good internet connection on your pc, laptop or tablet and Parrot Disco with
-                            LTE mod connected to ZeroTier network.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-xl-4 mt-4">
-                <div class="card h-100">
-                    <div class="card-header pb-0 p-3">
-                        <div class="row">
-                            <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-0">How to take off with this software?</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body p-3">
-                        <p class="text-sm">
-                            First, deploy. Then go to the field with your Parrot Disco and smartphone. Go to your unique
-                            flight link, then use mobile view. You can take off using the smartphone and you can direct
-                            the flight in any direction at the right altitude (like 100 meters). Then you can come back
-                            home and fly from your local computer.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-xl-4 mt-4">
-                <div class="card h-100">
-                    <div class="card-header pb-0 p-3">
-                        <div class="row">
-                            <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-0">I don't need SkyController 2 at all?</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body p-3">
-                        <p class="text-sm">
-                            Not yet, you only need SC2 for calication. We currently doesn't support that function.
-                        </p>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
         <footer class="footer pt-3 mt-auto">

@@ -32,9 +32,14 @@ func New(
 		hash := c.Param("hash")
 
 		if host == "flight.parrotdisco.pl" {
-			deployIP, _ := services.DeployService.GetDeployIPByHash(c, hash)
-			if deployIP != nil {
-				c.Redirect(http.StatusFound, fmt.Sprintf("http://%s:8000/", *deployIP))
+			user, _ := services.DeployService.GetDeployIPByHash(c, hash)
+			if user != nil {
+				if user.DeployStatus == 4 && user.DeployIP != nil {
+					c.Redirect(http.StatusFound, fmt.Sprintf("http://%s:8000/", *user.DeployIP))
+				} else {
+					c.AbortWithError(http.StatusNotFound, fmt.Errorf("deployment not ready"))
+					return
+				}
 			}
 		}
 

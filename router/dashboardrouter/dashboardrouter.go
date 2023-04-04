@@ -6,6 +6,7 @@ import (
 	"github.com/ClassAxion/parrot-disco-as-a-service/internal/middleware"
 	"github.com/ClassAxion/parrot-disco-as-a-service/service"
 	"github.com/ClassAxion/parrot-disco-as-a-service/service/dashboardservice"
+	"github.com/ClassAxion/parrot-disco-as-a-service/service/deployservice"
 	"github.com/ClassAxion/parrot-disco-as-a-service/service/userservice"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -25,6 +26,11 @@ func dashboard(dashboardService *dashboardservice.Service, userService *userserv
 		c.HTML(http.StatusOK, "dashboard/index", gin.H{
 			"Title":    "Homepage",
 			"Settings": settings,
+			"Status": gin.H{
+				"CanDeploy": settings.DeployStatus == 0 || settings.DeployStatus == 4,
+				"CanStop":   settings.DeployStatus == 3,
+				"Verbose":   deployservice.DeployStatusVerbose[settings.DeployStatus],
+			},
 		})
 	}
 }

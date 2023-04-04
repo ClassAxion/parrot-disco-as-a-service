@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/ClassAxion/parrot-disco-as-a-service/internal/database"
+	"github.com/ClassAxion/parrot-disco-as-a-service/internal/database/user"
 )
 
 type Service struct {
@@ -16,17 +17,25 @@ func New(db *database.Database) *Service {
 	}
 }
 
-func (service *Service) GetDeployIPByHash(ctx context.Context, hash string) (*string, error) {
-	row := service.DB.QueryRowContext(ctx, "SELECT deployIP FROM public.user WHERE hash = $1", hash)
+var DeployStatusVerbose = map[int]string{
+	0: "ready to deploy",
+	1: "received deploy request",
+	2: "deploying in progress",
+	3: "deployed",
+	4: "deploy failed",
+}
+
+func (service *Service) GetDeployIPByHash(ctx context.Context, hash string) (*user.User, error) {
+	row := service.DB.QueryRowContext(ctx, "SELECT deployIP, deployStatus FROM public.user WHERE hash = $1", hash)
 	if err := row.Err(); err != nil {
 		return nil, err
 	}
 
-	var deployIP string
+	var user user.User
 
-	if err := row.Scan(&deployIP); err != nil {
+	if err := row.Scan(&user.DeployIP, &user.DeployStatus); err != nil {
 		return nil, err
 	}
 
-	return &deployIP, nil
+	return &user, nil
 }

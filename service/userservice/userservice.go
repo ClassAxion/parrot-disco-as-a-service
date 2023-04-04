@@ -34,7 +34,7 @@ func (service *Service) GetUser(ctx context.Context, ID int) (*user.User, error)
 }
 
 func (service *Service) GetSettings(ctx context.Context, ID int) (*user.User, error) {
-	row := service.DB.QueryRowContext(ctx, "SELECT hash, zeroTierNetworkId, zeroTierDiscoIP, homeLocation FROM public.user WHERE id = $1", ID)
+	row := service.DB.QueryRowContext(ctx, "SELECT hash, zeroTierNetworkId, zeroTierDiscoIP, homeLocation, defaultRegion, deployStatus FROM public.user WHERE id = $1", ID)
 	if err := row.Err(); err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (service *Service) GetSettings(ctx context.Context, ID int) (*user.User, er
 
 	var location *[]byte
 
-	if err := row.Scan(&user.Hash, &user.ZeroTierNetworkId, &user.ZeroTierDiscoIP, &location); err != nil {
+	if err := row.Scan(&user.Hash, &user.ZeroTierNetworkId, &user.ZeroTierDiscoIP, &location, &user.DefaultRegion, &user.DeployStatus); err != nil {
 		return nil, err
 	}
 
@@ -69,4 +69,12 @@ func (service *Service) SaveSettings(ctx context.Context, userID int, hash strin
 	}
 
 	return service.DB.UpdateQuery(ctx, "UPDATE public.user SET hash = $2, zeroTierNetworkId = $3, zeroTierDiscoIP = $4, homeLocation = $5 WHERE id = $1", userID, hash, zeroTierNetworkId, zeroTierDiscoIP, data)
+}
+
+func (service *Service) UpdateDefaultRegion(ctx context.Context, userID int, defaultRegion string) error {
+	return service.DB.UpdateQuery(ctx, "UPDATE public.user SET defaultRegion = $2 WHERE id = $1", userID, defaultRegion)
+}
+
+func (service *Service) StartDeploying(ctx context.Context, userID int) error {
+	return service.DB.UpdateQuery(ctx, "UPDATE public.user SET deployStatus = 1 WHERE id = $1", userID)
 }

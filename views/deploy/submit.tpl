@@ -262,6 +262,13 @@
                                 <label>Region</label>
                                 <div class="mb-3">
                                     <select class="form-select" aria-label="" name="region">
+                                        {{if .DefaultRegion}}
+                                        <option value="{{ .DefaultRegion.ID }}" selected="">
+                                            {{ .DefaultRegion.Country }} ({{ .DefaultRegion.City }}) - your last choice
+                                        </option>
+                                        {{
+                                            end
+                                        }}
                                         {{
                                             range.Regions
                                         }}
@@ -275,13 +282,22 @@
                                     <input
                                         class="form-check-input"
                                         type="checkbox"
-                                        id="rememberMe"
+                                        id="rememberRegion"
                                         name="rememberRegion"
                                     />
-                                    <label class="form-check-label" for="rememberMe">Remember my choice</label>
+                                    <label class="form-check-label" for="rememberRegion">Remember my choice</label>
+                                </div>
+                                <div class="form-text mb-2">
+                                    Your session will be deleted automatically after 3 hours from deploy
                                 </div>
                                 <div class="text-center">
+                                    {{if .Status.CanDeploy }}
                                     <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Deploy</button>
+                                    {{else}}
+                                    <button type="button" class="btn bg-gradient-info w-100 mt-4 mb-0" disabled="">
+                                        Cannot deploy now
+                                    </button>
+                                    {{ end }}
                                 </div>
                             </form>
                         </div>
@@ -293,12 +309,16 @@
                     <div class="card-header pb-0 p-3">
                         <div class="row">
                             <div class="col-6 d-flex align-items-center">
-                                <h6 class="mb-0">Status <span class="text-success">deployed</span></h6>
+                                <h6 class="mb-0">
+                                    Status <span class="text-success">{{ .Status.Verbose }}</span>
+                                </h6>
                             </div>
                             <div class="col-6 text-end">
+                                {{if .Status.CanStop }}
                                 <a class="btn bg-gradient-danger mb-0" href="/deploy/stop"
                                     ><i class="fas fa-times"></i>&nbsp;&nbsp;Stop</a
                                 >
+                                {{ end }}
                             </div>
                         </div>
                     </div>

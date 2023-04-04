@@ -7,8 +7,9 @@ CREATE TABLE public.user (
     zeroTierNetworkId character varying,
     zeroTierDiscoIP character varying,
     homeLocation jsob,
-    deployStatus number NOT NULL DEFAULT 0,
+    deployStatus integer NOT NULL DEFAULT 0,
     deployIP character varying,
     deployID character varying,
-    deployedAt time without timezone
+    defaultRegion character varying,
+    deployedAt timestamp without time zone
 );
