@@ -6,7 +6,7 @@ CREATE TABLE public.user (
     hash character varying UNIQUE,
     zeroTierNetworkId character varying,
     zeroTierDiscoIP character varying,
-    homeLocation jsob,
+    homeLocation jsonb,
     deployStatus integer NOT NULL DEFAULT 0,
     deployIP character varying,
     deployPassword character varying,
