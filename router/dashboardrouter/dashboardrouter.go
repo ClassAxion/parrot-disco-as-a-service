@@ -16,6 +16,11 @@ func dashboard(dashboardService *dashboardservice.Service, userService *userserv
 	return func(c *gin.Context) {
 		session := sessions.Default(c)
 
+		if session.Get("user") == nil {
+			c.Redirect(http.StatusFound, "/auth/sign-in")
+			return
+		}
+
 		userID := session.Get("user").(int)
 
 		settings, err := userService.GetSettings(c, userID)
