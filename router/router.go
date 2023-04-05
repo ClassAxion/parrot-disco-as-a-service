@@ -2,6 +2,7 @@ package router
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/ClassAxion/parrot-disco-as-a-service/router/authrouter"
@@ -31,6 +32,8 @@ func New(
 		host := c.GetHeader("Host")
 		hash := c.Param("hash")
 
+		log.Println(host, hash)
+
 		if host == "flight.parrotdisco.pl" {
 			user, _ := services.DeployService.GetDeployIPByHash(c, hash)
 
@@ -38,11 +41,11 @@ func New(
 				if user.DeployStatus == 3 && user.DeployIP != nil {
 					c.Redirect(http.StatusFound, fmt.Sprintf("http://%s:8000/", *user.DeployIP))
 				} else if user.DeployStatus == 1 || user.DeployStatus == 2 {
-					c.AbortWithError(http.StatusNotFound, fmt.Errorf("deploying in progress"))
+					c.Data(http.StatusNotFound, "plain/text; charset=utf-8", []byte("deploying in progress"))
 				} else if user.DeployStatus == 4 {
-					c.AbortWithError(http.StatusNotFound, fmt.Errorf("deploying failed"))
+					c.Data(http.StatusNotFound, "plain/text; charset=utf-8", []byte("deploying failed"))
 				} else {
-					c.AbortWithError(http.StatusNotFound, fmt.Errorf("not deployed"))
+					c.Data(http.StatusNotFound, "plain/text; charset=utf-8", []byte("not deployed"))
 				}
 
 				return

@@ -123,16 +123,20 @@ func startDeploy(ctx context.Context, wc WorkerContext) error {
 			return fmt.Errorf("failed to clone git repo")
 		}
 
-		if _, err := client.Cmd(fmt.Sprintf("echo DISCO_IP=%s\n >> ~/parrot-disco-devops/.env", *user.ZeroTierDiscoIP)).Output(); err != nil {
+		if _, err := client.Cmd("touch ~/parrot-disco-devops/.env").Output(); err != nil {
+			return fmt.Errorf("failed to create env")
+		}
+
+		if _, err := client.Cmd(fmt.Sprintf("echo DISCO_IP=%s >> ~/parrot-disco-devops/.env", *user.ZeroTierDiscoIP)).Output(); err != nil {
 			return fmt.Errorf("failed to set disco IP")
 		}
 
-		if _, err := client.Cmd(fmt.Sprintf("echo ZEROTIER_ID=%s\n >> ~/parrot-disco-devops/.env", *user.ZeroTierNetworkId)).Output(); err != nil {
+		if _, err := client.Cmd(fmt.Sprintf("echo ZEROTIER_ID=%s >> ~/parrot-disco-devops/.env", *user.ZeroTierNetworkId)).Output(); err != nil {
 			return fmt.Errorf("failed to set zerotier ID")
 		}
 
 		if user.HomeLocation != nil {
-			if _, err := client.Cmd(fmt.Sprintf("echo HOME_LOCATION=%.5f,%.5f,%d\n >> ~/parrot-disco-devops/.env", user.HomeLocation.Latitude, user.HomeLocation.Longitude, user.HomeLocation.Altitude)).Output(); err != nil {
+			if _, err := client.Cmd(fmt.Sprintf("echo HOME_LOCATION=%.5f,%.5f,%d >> ~/parrot-disco-devops/.env", user.HomeLocation.Latitude, user.HomeLocation.Longitude, user.HomeLocation.Altitude)).Output(); err != nil {
 				return fmt.Errorf("failed to set home location")
 			}
 		}
