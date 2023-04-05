@@ -29,7 +29,7 @@ func New(
 	r.StaticFS("/public", http.Dir("./public/"))
 
 	r.GET("/:hash", func(c *gin.Context) {
-		host := c.GetHeader("Host")
+		host := c.Request.Host
 		hash := c.Param("hash")
 
 		log.Println(host, hash)
