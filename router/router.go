@@ -2,7 +2,6 @@ package router
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/ClassAxion/parrot-disco-as-a-service/router/authrouter"
