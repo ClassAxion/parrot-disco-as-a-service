@@ -117,10 +117,6 @@ func startDeploy(ctx context.Context, wc WorkerContext) error {
 			return fmt.Errorf("failed to install docker")
 		}
 
-		if _, err := client.Cmd("ufw allow 8000").Output(); err != nil {
-			return fmt.Errorf("failed to allow port 8000")
-		}
-
 		if _, err := client.Cmd("git clone https://github.com/ClassAxion/parrot-disco-devops").Output(); err != nil {
 			return fmt.Errorf("failed to clone git repo")
 		}
@@ -145,6 +141,10 @@ func startDeploy(ctx context.Context, wc WorkerContext) error {
 
 		if _, err := client.Cmd("cd ~/parrot-disco-devops && docker compose up -d").Output(); err != nil {
 			return fmt.Errorf("failed to start containers")
+		}
+
+		if _, err := client.Cmd("ufw disable").Output(); err != nil {
+			return fmt.Errorf("failed to disable ufw")
 		}
 
 		defer client.Close()
