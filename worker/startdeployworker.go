@@ -94,7 +94,7 @@ func startDeploy(ctx context.Context, wc WorkerContext) error {
 			time.Sleep(time.Second * 30)
 		}
 
-		log.Println("Instance created, deploying..")
+		log.Println("Instance created, connecting..")
 
 		if _, err := wc.DB.ExecContext(ctx, "UPDATE public.user SET deployIP = $2 WHERE id = $1", user.ID, IP); err != nil {
 			return err
@@ -110,6 +110,8 @@ func startDeploy(ctx context.Context, wc WorkerContext) error {
 
 			time.Sleep(time.Second * 15)
 		}
+
+		log.Println("Connected! Deploying app..")
 
 		if _, err := client.Cmd("curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh").Output(); err != nil {
 			return fmt.Errorf("failed to install docker")
