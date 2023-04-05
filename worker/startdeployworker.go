@@ -65,8 +65,8 @@ func startDeploy(ctx context.Context, wc WorkerContext) error {
 			Label:   fmt.Sprintf("flight-%s-%d-%s", *user.Hash, user.ID, user.Email),
 			Backups: "disabled",
 			OsID:    1743,
-			Plan:    "vc2-1c-1gb",
-			// Plan:    "vc2-2c-4gb",
+			// Plan:    "vc2-1c-1gb",
+			Plan:   "vc2-2c-4gb",
 			Region: *user.DeployRegion,
 		})
 		if err != nil {
