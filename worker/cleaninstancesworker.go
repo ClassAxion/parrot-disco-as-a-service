@@ -13,7 +13,7 @@ import (
 )
 
 func getUsedInstances(ctx context.Context, db *database.Database) ([]user.User, error) {
-	selector, err := db.QueryContext(ctx, "SELECT deployID FROM public.user WHERE deployStatus != 0 AND deployStatus != 4")
+	selector, err := db.QueryContext(ctx, "SELECT deployID FROM public.user WHERE deployStatus != 0 AND deployStatus != 4 AND deployID IS NOT NULL")
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,9 @@ func cleanInstances(ctx context.Context, wc WorkerContext) error {
 	exists := map[string]bool{}
 
 	for _, u := range users {
-		exists[*u.DeployID] = true
+		if u.DeployID != nil {
+			exists[*u.DeployID] = true
+		}
 	}
 
 	instances, _, _, err := wc.Services.Vultr.Instance.List(ctx, &govultr.ListOptions{})
