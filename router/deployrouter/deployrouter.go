@@ -14,14 +14,19 @@ import (
 
 func submit(deployService *deployservice.Service, vultr *govultr.Client, userService *userservice.Service) func(*gin.Context) {
 	return func(c *gin.Context) {
+		session := sessions.Default(c)
+
+		if session.Get("user") == nil {
+			c.Redirect(http.StatusFound, "/auth/sign-in")
+			return
+		}
+
+		userID := session.Get("user").(int)
+
 		regions, _, _, err := vultr.Region.List(c, &govultr.ListOptions{})
 		if err != nil {
 			panic(err)
 		}
-
-		session := sessions.Default(c)
-
-		userID := session.Get("user").(int)
 
 		settings, err := userService.GetSettings(c, userID)
 		if err != nil {
@@ -100,6 +105,11 @@ func submit(deployService *deployservice.Service, vultr *govultr.Client, userSer
 func stop(deployService *deployservice.Service, vultr *govultr.Client, userService *userservice.Service) func(*gin.Context) {
 	return func(c *gin.Context) {
 		session := sessions.Default(c)
+
+		if session.Get("user") == nil {
+			c.Redirect(http.StatusFound, "/auth/sign-in")
+			return
+		}
 
 		userID := session.Get("user").(int)
 
