@@ -56,6 +56,8 @@ func stopDeploy(ctx context.Context, wc WorkerContext) error {
 		if _, err := wc.DB.ExecContext(ctx, "UPDATE public.user SET deployStatus = 0, deployedAt = NULL WHERE id = $1", user.ID); err != nil {
 			return err
 		}
+
+		log.Printf("Stopping instance %s", *user.DeployID)
 	}
 
 	return nil
@@ -72,7 +74,7 @@ func StopDeploy() Worker {
 					return nil, fmt.Errorf("failed to stop deploy: %w", err)
 				}
 
-				log.Println("StopDeploy")
+				// log.Println("StopDeploy")
 
 				return json.Marshal(time.Now())
 			})

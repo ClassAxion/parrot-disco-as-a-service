@@ -13,7 +13,7 @@ import (
 )
 
 func getUsedInstances(ctx context.Context, db *database.Database) ([]user.User, error) {
-	selector, err := db.QueryContext(ctx, "SELECT deployID FROM public.user WHERE deployStatus != 0 AND deployStatus != 4 AND deployID IS NOT NULL")
+	selector, err := db.QueryContext(ctx, "SELECT deployID FROM public.user WHERE deployID IS NOT NULL")
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func CleanInstances() Worker {
 					return nil, fmt.Errorf("failed to clean instances: %w", err)
 				}
 
-				log.Println("CleanInstances")
+				// log.Println("CleanInstances")
 
 				return json.Marshal(time.Now())
 			})

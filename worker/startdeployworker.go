@@ -170,7 +170,7 @@ func StartDeploy() Worker {
 					return nil, fmt.Errorf("failed to start deploy: %w", err)
 				}
 
-				log.Println("StartDeploy")
+				// log.Println("StartDeploy")
 
 				return json.Marshal(time.Now())
 			})
