@@ -14,7 +14,7 @@ import (
 )
 
 func getUsersForDeploy(ctx context.Context, db *database.Database) ([]user.User, error) {
-	selector, err := db.QueryContext(ctx, "SELECT id, email, deployRegion, hash, zeroTierNetworkId, zeroTierDiscoIP, homeLocation FROM public.user WHERE deployStatus = 1")
+	selector, err := db.QueryContext(ctx, "SELECT id, email, deployRegion, hash, zeroTierNetworkId, zeroTierDiscoIP, homeLocation, share_location FROM public.user WHERE deployStatus = 1")
 	if err != nil {
 		return nil, err
 	}
@@ -32,7 +32,7 @@ func getUsersForDeploy(ctx context.Context, db *database.Database) ([]user.User,
 
 		var location *[]byte
 
-		if err := selector.Scan(&user.ID, &user.Email, &user.DeployRegion, &user.Hash, &user.ZeroTierNetworkId, &user.ZeroTierDiscoIP, &location); err != nil {
+		if err := selector.Scan(&user.ID, &user.Email, &user.DeployRegion, &user.Hash, &user.ZeroTierNetworkId, &user.ZeroTierDiscoIP, &location, &user.ShareLocation); err != nil {
 			return nil, err
 		}
 
@@ -136,6 +136,12 @@ func startDeploy(ctx context.Context, wc WorkerContext) error {
 		if user.HomeLocation != nil {
 			if _, err := client.Cmd(fmt.Sprintf("echo HOME_LOCATION=%.5f,%.5f,%d >> ~/parrot-disco-devops/.env", user.HomeLocation.Latitude, user.HomeLocation.Longitude, user.HomeLocation.Altitude)).Output(); err != nil {
 				return fmt.Errorf("failed to set home location")
+			}
+		}
+
+		if user.ShareLocation {
+			if _, err := client.Cmd(fmt.Sprintf("echo MAP=%s >> ~/parrot-disco-devops/.env", "wss://map.parrotdisco.pl/")).Output(); err != nil {
+				return fmt.Errorf("failed to set map")
 			}
 		}
 

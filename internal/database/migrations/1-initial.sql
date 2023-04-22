@@ -12,5 +12,6 @@ CREATE TABLE public.user (
     deployPassword character varying,
     deployID character varying,
     deployRegion character varying,
-    deployedAt timestamp without time zone
+    deployedAt timestamp without time zone,
+    share_location boolean DEFAULT FALSE
 );

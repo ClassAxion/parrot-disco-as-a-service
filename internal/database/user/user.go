@@ -29,4 +29,5 @@ type User struct {
 	DeployID       *string
 	DeployRegion   *string
 	DeployedAt     *time.Time
+	ShareLocation  bool
 }

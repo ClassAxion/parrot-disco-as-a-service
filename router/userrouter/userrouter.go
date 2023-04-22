@@ -32,6 +32,7 @@ func settings(userService *userservice.Service) func(*gin.Context) {
 			hash := c.PostForm("hash")
 			zeroTierNetworkId := c.PostForm("zeroTierNetworkId")
 			zeroTierDiscoIP := c.PostForm("zeroTierDiscoIP")
+			shareLocation := c.PostForm("share_location") != ""
 
 			if !(settings.DeployStatus == 0 || settings.DeployStatus == 4) {
 				session.AddFlash("You cannot modify settings now", "danger")
@@ -71,7 +72,7 @@ func settings(userService *userservice.Service) func(*gin.Context) {
 					if useHomeLocation && (homeLocation.Latitude == 0 || homeLocation.Longitude == 0 || homeLocation.Altitude == 0) {
 						session.AddFlash("Please fill home location fields correctly", "danger")
 						session.Save()
-					} else if err := userService.SaveSettings(c, userID, hash, zeroTierNetworkId, zeroTierDiscoIP, homeLocation); err != nil {
+					} else if err := userService.SaveSettings(c, userID, hash, zeroTierNetworkId, zeroTierDiscoIP, homeLocation, shareLocation); err != nil {
 						session.AddFlash("Please fill all fields correctly", "danger")
 						session.Save()
 					} else {

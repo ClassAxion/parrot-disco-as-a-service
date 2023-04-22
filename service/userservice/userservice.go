@@ -34,7 +34,7 @@ func (service *Service) GetUser(ctx context.Context, ID int) (*user.User, error)
 }
 
 func (service *Service) GetSettings(ctx context.Context, ID int) (*user.User, error) {
-	row := service.DB.QueryRowContext(ctx, "SELECT hash, zeroTierNetworkId, zeroTierDiscoIP, homeLocation, deployRegion, deployStatus FROM public.user WHERE id = $1", ID)
+	row := service.DB.QueryRowContext(ctx, "SELECT hash, zeroTierNetworkId, zeroTierDiscoIP, homeLocation, deployRegion, deployStatus, share_location FROM public.user WHERE id = $1", ID)
 	if err := row.Err(); err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (service *Service) GetSettings(ctx context.Context, ID int) (*user.User, er
 
 	var location *[]byte
 
-	if err := row.Scan(&user.Hash, &user.ZeroTierNetworkId, &user.ZeroTierDiscoIP, &location, &user.DeployRegion, &user.DeployStatus); err != nil {
+	if err := row.Scan(&user.Hash, &user.ZeroTierNetworkId, &user.ZeroTierDiscoIP, &location, &user.DeployRegion, &user.DeployStatus, &user.ShareLocation); err != nil {
 		return nil, err
 	}
 
@@ -56,7 +56,7 @@ func (service *Service) GetSettings(ctx context.Context, ID int) (*user.User, er
 	return &user, nil
 }
 
-func (service *Service) SaveSettings(ctx context.Context, userID int, hash string, zeroTierNetworkId string, zeroTierDiscoIP string, homeLocation *user.Location) error {
+func (service *Service) SaveSettings(ctx context.Context, userID int, hash string, zeroTierNetworkId string, zeroTierDiscoIP string, homeLocation *user.Location, shareLocation bool) error {
 	var data *[]byte
 
 	if homeLocation != nil {
@@ -68,7 +68,7 @@ func (service *Service) SaveSettings(ctx context.Context, userID int, hash strin
 		data = &val
 	}
 
-	return service.DB.UpdateQuery(ctx, "UPDATE public.user SET hash = $2, zeroTierNetworkId = $3, zeroTierDiscoIP = $4, homeLocation = $5 WHERE id = $1", userID, hash, zeroTierNetworkId, zeroTierDiscoIP, data)
+	return service.DB.UpdateQuery(ctx, "UPDATE public.user SET hash = $2, zeroTierNetworkId = $3, zeroTierDiscoIP = $4, homeLocation = $5, share_location = $6 WHERE id = $1", userID, hash, zeroTierNetworkId, zeroTierDiscoIP, data, shareLocation)
 }
 
 func (service *Service) StartDeploying(ctx context.Context, userID int, deployRegion string) error {

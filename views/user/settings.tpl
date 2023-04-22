@@ -365,6 +365,25 @@
                     return-to-home request. If not, it will come back to take off point. You can change it also during
                     flight in RTH page on the dashboard.
                 </div>
+                <label>Position sharing</label>
+                <div class="mb-3">
+                    <div class="form-check form-check-info text-left">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value="1"
+                            id="share_location"
+                            name="share_location"
+                            {{if
+                            .User.ShareLocation}}checked=""
+                            {{end}}
+                        />
+                        <label class="form-check-label" for="share_location">
+                            Share my position during flight to
+                            <a href="https://map.parrotdisco.pl" target="_blank">Parrot Disco LTE global map</a>.
+                        </label>
+                    </div>
+                </div>
                 <div class="text-center">
                     {{if .CanChange}}
                     <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Save settings</button>
