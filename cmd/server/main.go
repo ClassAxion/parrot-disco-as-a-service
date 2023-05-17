@@ -41,7 +41,7 @@ func startServer(ctx context.Context, services *service.Services, port int) {
 		DisableCache: true,
 	})
 
-	store := cookie.NewStore([]byte("video-creator-manager"))
+	store := cookie.NewStore([]byte("parrotdisco"))
 
 	store.Options(sessions.Options{
 		MaxAge: 2678400,
