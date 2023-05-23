@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	"github.com/ClassAxion/parrot-disco-as-a-service/internal/database"
@@ -59,6 +60,10 @@ func cleanInstances(ctx context.Context, wc WorkerContext) error {
 	}
 
 	for _, instance := range instances {
+		if !strings.HasPrefix(instance.ID, "flight") {
+			continue
+		}
+
 		if _, exists := exists[instance.ID]; !exists {
 			wc.Services.Vultr.Instance.Delete(ctx, instance.ID)
 
